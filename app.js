@@ -37,6 +37,13 @@ class UI {
 
   }
 
+  deleteBook(target) {
+    if (target.className === 'delete') {
+      // console.log('test');
+      target.parentElement.parentElement.remove();
+    }
+  }
+
   clearFields() {
     document.getElementById('title').value = '';
     document.getElementById('author').value = '';
@@ -44,6 +51,7 @@ class UI {
   }
 }
 
+// Add book event listener
 document.getElementById('book-form').addEventListener('submit', e => {
   // console.log('test');
 
@@ -66,24 +74,14 @@ document.getElementById('book-form').addEventListener('submit', e => {
     ui.clearFields();
   }
 
-
-
-  // Non-OOP approach
-  // const tr = document.createElement('tr');
-  // const tdTitle = document.createElement('td');
-  // const tdAuthor = document.createElement('td');
-  // const tdIsbn = document.createElement('td');
-
-  // tdTitle.appendChild(document.createTextNode(`${title}`));
-  // tdAuthor.appendChild(document.createTextNode(`${author}`));
-  // tdIsbn.appendChild(document.createTextNode(`${isbn}`));
-
-  // tr.appendChild(tdTitle);
-  // tr.appendChild(tdAuthor);
-  // tr.appendChild(tdIsbn);
-
-  // document.getElementById('book-list').appendChild(tr);
-
   e.preventDefault();
 });
 
+// Delete book event listener
+document.getElementById('book-list').addEventListener('click', e => {
+  const ui = new UI();
+  ui.deleteBook(e.target);
+
+  ui.showAlert('Book deleted', 'success')
+  e.preventDefault();
+});
