@@ -51,6 +51,33 @@ class UI {
   }
 }
 
+// Local Storage Class
+class Store {
+  static getBooks() {
+    let books;
+    if (localStorage.getItem('books') === null) {
+      books = [];
+    } else {
+      books = JSON.parse(localStorage.getItem('books'));
+    }
+    return books;
+  }
+
+  static displayBooks() {
+    const books = Store.getBooks();
+
+  }
+  static addBook(book) {
+    const books = Store.getBooks();
+    books.push(book);
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+
+  static removeBook() {
+
+  }
+}
+
 // Add book event listener
 document.getElementById('book-form').addEventListener('submit', e => {
   // console.log('test');
@@ -70,6 +97,8 @@ document.getElementById('book-form').addEventListener('submit', e => {
     ui.showAlert('Book added', 'success');
     // Add book to list
     ui.addBookToList(book);
+    // Add to LS
+    Store.addBook(book);
     // Clear fields
     ui.clearFields();
   }
@@ -82,6 +111,6 @@ document.getElementById('book-list').addEventListener('click', e => {
   const ui = new UI();
   ui.deleteBook(e.target);
 
-  ui.showAlert('Book deleted', 'success')
+  ui.showAlert('Book removed', 'success')
   e.preventDefault();
 });
